@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Produto</title>
+</head>
+<body>
+    <h1>Adicionar Novo Produto</h1>
+    <form id="productForm">
+        <label for="name">Nome do Produto:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="purchasePrice">Preço de Compra:</label>
+        <input type="number" id="purchasePrice" name="purchasePrice" required><br><br>
+        
+        <label for="salePrice">Preço de Venda:</label>
+        <input type="number" id="salePrice" name="salePrice" required><br><br>
+        
+        <button type="submit">Adicionar Produto</button>
+    </form>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                purchasePrice: document.getElementById('purchasePrice').value,
+                salePrice: document.getElementById('salePrice').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:8081/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao adicionar produto');
+                }
+
+                const data = await response.json();
+                console.log('Produto adicionado:', data);
+                alert('Produto adicionado com sucesso!');
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao adicionar produto. Verifique o console para mais detalhes.');
+            }
+        });
+    </script>
+</body>
+</html>
