@@ -35,12 +35,3 @@ const response = await fetch("http://localhost:8081/api/products/totals");
 const userData  = await response.json();
 
 const { totalPurchase, totalSale, totalProfit } = userData;
-
-console.log(
-    // Total  pago
-    totalPurchase,
-    // Total  vendido
-    totalSale,
-    // lucro
-    totalProfit
-);
